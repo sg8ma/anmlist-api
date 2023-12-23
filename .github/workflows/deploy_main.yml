@@ -1,0 +1,14 @@
+name: "deploy main"
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: |
+          echo "${{ secrets.SSH_KEY }}" > ssh_key
+          chmod 600 ssh_key
+          ssh -oStrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} -i ssh_key "cd /var/www/html/api.animetable.1428.in && git pull origin main && composer dumpautoload"
