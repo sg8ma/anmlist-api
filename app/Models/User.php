@@ -83,8 +83,7 @@ class User
                     'custom_user_id'=> $custom_user_id,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
-                ])
-                ->first();
+                ]);
             DB::commit();
         }
         catch(Exception $e)
@@ -115,8 +114,7 @@ class User
                     'user_name' => $user_name,
                     'custom_user_id'=> $custom_user_id,
                     'updated_at' => Carbon::now(),
-                ])
-                ->first();
+                ]);
             DB::commit();
         }
         catch(Exception $e)
@@ -146,8 +144,7 @@ class User
                 ->update([
                     'is_deleted' => 1,
                     'deleted_at' => Carbon::now(),
-                ])
-                ->first();
+                ]);
             DB::commit();
         }
         catch(Exception $e)
