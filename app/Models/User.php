@@ -23,7 +23,7 @@ class User
         DB::beginTransaction();
         try
         {
-            $users = DB::table('tbl_users')
+            $users = DB::table('tbl_user')
                 ->select(
                     'user_id',
                     'user_name',
@@ -50,7 +50,7 @@ class User
         DB::beginTransaction();
         try
         {
-            $user = DB::table('tbl_users')
+            $user = DB::table('tbl_user')
                 ->select(
                     'user_id',
                     'user_name',
@@ -77,7 +77,7 @@ class User
         DB::beginTransaction();
         try
         {
-            $user_id = DB::table('tbl_users')
+            $user_id = DB::table('tbl_user')
                 ->insertGetId([
                     'user_name' => $user_name,
                     'custom_user_id'=> $custom_user_id,
@@ -109,7 +109,7 @@ class User
         DB::beginTransaction();
         try
         {
-            $result = DB::table('tbl_users')
+            $result = DB::table('tbl_user')
                 ->where('user_id', '=', $id)
                 ->update([
                     'user_name' => $user_name,
@@ -141,7 +141,7 @@ class User
         DB::beginTransaction();
         try
         {
-            $result = DB::table('tbl_users')
+            $result = DB::table('tbl_user')
                 ->where('user_id', '=', $id)
                 ->update([
                     'is_deleted' => 1,
