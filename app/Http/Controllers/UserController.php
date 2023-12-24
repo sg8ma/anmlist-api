@@ -22,13 +22,13 @@ class UserController extends Controller
 
     public function create(Request $request)
     {
-        $user = (new User())->create();
+        $user = (new User())->create($request->user_name, $request->custom_user_id);
         return response()->json($user);
     }
 
     public function update(Request $request, $id)
     {
-        $user = (new User())->list($id);
+        $user = (new User())->list($id, $request->user_name, $request->custom_user_id);
         return response()->json($user);
     }
 
