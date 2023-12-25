@@ -36,10 +36,10 @@ class User
                 ->get();
             DB::commit();
         }
-        catch(Exception $e)
+        catch(\Exception $e)
         {
             $users = null;
-            Log::error($e->getMessage());
+            Log::error('exception: ' . $e->getMessage());
             DB::rollBack();
         }
         return $users;
@@ -63,7 +63,7 @@ class User
                 ->first();
             DB::commit();
         }
-        catch(Exception $e)
+        catch(\Exception $e)
         {
             $users = null;
             Log::error($e->getMessage());
@@ -72,8 +72,12 @@ class User
         return $user;
     }
 
-    public function create($user_name, $custom_user_id)
+    public function create($user_name, $custom_user_id = '')
     {
+        if(empty($custom_user_id))
+        {
+            $custom_user_id = 'u' . uniqid(mt_rand());
+        }
         DB::beginTransaction();
         try
         {
@@ -86,7 +90,7 @@ class User
                 ]);
             DB::commit();
         }
-        catch(Exception $e)
+        catch(\Exception $e)
         {
             $user_id = -1;
             Log::error($e->getMessage());
@@ -117,7 +121,7 @@ class User
                 ]);
             DB::commit();
         }
-        catch(Exception $e)
+        catch(\Exception $e)
         {
             $result = -1;
             Log::error($e->getMessage());
@@ -147,7 +151,7 @@ class User
                 ]);
             DB::commit();
         }
-        catch(Exception $e)
+        catch(\Exception $e)
         {
             $result = -1;
             Log::error($e->getMessage());
