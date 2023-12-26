@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Models\SessionWrapper;
+
 
 class UserAuth
 {
@@ -100,6 +103,88 @@ class UserAuth
                 $response['auth_status'] = 1;
             }
         }
+        return $response;
+    }
+
+    public function login_mail($mail, $password)
+    {
+        $response['session_key'] =  '';
+        $response['login_status'] = 0;
+        DB::beginTransaction();
+        try
+        {
+            $auth_data = DB::table('tbl_user as a')
+                ->leftJoin('tbl_user_auth as b', 'a.user_id', '=', 'b.user_id')
+                ->select('a.user_id')
+                ->where('a.is_deleted', '=', '0')
+                ->where('b.identity_type', '=', 'mail')
+                ->where('b.identifier', '=', $mail)
+                ->where('b.credential', '=', $password)
+                ->first();
+            DB::commit();
+        }
+        catch(\Exception $e)
+        {
+            Log::error('exception: ' . $e->getMessage());
+            DB::rollBack();
+            return $response;
+        }
+        if(!empty($auth_data->user_id))
+        {
+            $response['session_key'] =  (new SessionWrapper())->RegenerateId();
+            $response['login_status'] = 1;
+        }
+        return $response;
+    }
+
+    public function exists_session($session_key)
+    {
+        $response['login_status'] = 0;
+        DB::beginTransaction();
+        try
+        {
+            $session_data = DB::table('tbl_user as a')
+                ->leftJoin('tbl_session as b', 'a.user_id', '=', 'b.user_id')
+                ->select('a.user_id')
+                ->where('a.is_deleted', '=', '0')
+                ->where('b.is_deleted', '=', '0')
+                ->where('b.session_key', '=', $session_key)
+                ->first();
+            DB::commit();
+        }
+        catch(\Exception $e)
+        {
+            Log::error('exception: ' . $e->getMessage());
+            DB::rollBack();
+            return $response;
+        }
+        if(!empty($session_data->user_id))
+        {
+            $response['login_status'] = 1;
+        }
+        return $response;
+    }
+
+    public function delete_session($session_key)
+    {
+        $response['is_deleted'] = 0;
+        DB::beginTransaction();
+        try
+        {
+            $result = DB::table('tbl_session as a')
+                ->where('session_key', '=', $session_key)
+                ->update([
+                    'is_deleted' => 1
+                ]);
+            DB::commit();
+        }
+        catch(\Exception $e)
+        {
+            Log::error('exception: ' . $e->getMessage());
+            DB::rollBack();
+            return $response;
+        }
+        $response['is_deleted'] = $result;
         return $response;
     }
 }

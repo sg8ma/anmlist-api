@@ -20,13 +20,12 @@ use App\Http\Controllers\AnimeController;
 // ユーザー新規登録画面
 Route::post('/user', [UserController::class, 'create']);
 Route::post('/user/auth/{type}', [UserAuthController::class, 'create']);
-// Route::post('/user/auth/mail/otp', [UserAuthController::class, 'mail_otp']);
 Route::get('/user/auth/mail/otp', [UserAuthController::class, 'check_otp']);
 
 // ユーザー認証画面
-Route::post('/user/login/{type}', [UserAuthController::class, 'login']);
-Route::get('/user/session/{key}', [UserSessionController::class, 'exists']);
-Route::delete('/user/session/{key}', [UserSessionController::class, 'delete']);
+Route::post('/user/login/{type}', [UserAuthController::class, 'login']);       //ログイン
+Route::get('/user/session', [UserSessionController::class, 'exists_session']); //ログインステータス確認
+Route::delete('/user/session', [UserSessionController::class, 'delete_session']); //ログアウト
 
 // ユーザー情報画面
 Route::get('/user', [UserController::class, 'list']);

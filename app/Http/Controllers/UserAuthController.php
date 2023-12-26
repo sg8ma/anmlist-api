@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 
 class UserAuthController extends Controller
 {
-    public function create(Request $request)
+    public function create(Request $request, $type)
     {
         $response['auth_status'] = 0;
-        if($request->path() == 'user/auth/mail')
+        if($type == 'mail')
         {
             $user = (new User())->create($request->input('username'));
             if($user != null)
@@ -26,6 +26,27 @@ class UserAuthController extends Controller
     public function check_otp(Request $request)
     {
         $response = (new UserAuth())->check_mail_token($request->input('token'), $request->input('otp'));
+        return response()->json($response);
+    }
+
+    public function login(Request $request, $type)
+    {
+        if($type == 'mail')
+        {
+            $response = (new UserAuth())->login_mail($request->input('mail'), $request->input('password'));
+        }
+        return response()->json($response);
+    }
+
+    public function exists_session(Request $request)
+    {
+        $response = (new UserAuth())->exists_session($request->input('session_key'));
+        return response()->json($response);
+    }
+
+    public function delete_session(Request $request)
+    {
+        $response = (new UserAuth())->delete_session($request->input('session_key'));
         return response()->json($response);
     }
 }
