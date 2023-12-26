@@ -24,8 +24,8 @@ Route::get('/user/auth/mail/otp', [UserAuthController::class, 'check_otp']);
 
 // ユーザー認証画面
 Route::post('/user/login/{type}', [UserAuthController::class, 'login']);       //ログイン
-Route::get('/user/session', [UserSessionController::class, 'exists_session']); //ログインステータス確認
-Route::delete('/user/session', [UserSessionController::class, 'delete_session']); //ログアウト
+Route::get('/user/session', [UserSessionController::class, 'exists']); //ログインステータス確認
+Route::delete('/user/session', [UserSessionController::class, 'delete']); //ログアウト
 
 // ユーザー情報画面
 Route::get('/user', [UserController::class, 'list']);
@@ -44,7 +44,7 @@ Route::get('/anime/{id}', [AnimeController::class, 'read']);
 
 
 // 他
-Route::get('/user/session/{key}/data', [UserSessionController::class, 'read_data']);
-Route::put('/user/session/{key}/data', [UserSessionController::class, 'put_data']);
+Route::get('/user/session/data', [UserSessionController::class, 'read_data']);
+Route::put('/user/session/data', [UserSessionController::class, 'put_data']);
 
 

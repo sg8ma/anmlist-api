@@ -59,7 +59,6 @@ class SessionWrapper
                 ->select('session_id')
                 ->where('session_key', '=', $sessionKey)
                 ->where('is_deleted', '=', 0)
-                ->orderBy('created_date', 'desc')
                 ->first();
             DB::commit();
         }

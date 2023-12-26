@@ -4,32 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\SessionWrapper;
+use App\Models\UserSession;
 use Illuminate\Http\Request;
 
 class UserSessionController extends Controller
 {
-    public function exists(Request $request, $key)
+    public function exists(Request $request)
     {
-        $response['key'] = $key;
-        $response['login_status'] = ((new SessionWrapper())->ExistsId($key))? 1 : 0;
+        $response['login_status'] = ((new SessionWrapper())->ExistsId($request->input('session_key')))? 1 : 0;
         return response()->json($response);
     }
 
-    public function delete(Request $request, $key)
+    public function delete(Request $request)
     {
-        $user = (new User())->read($id);
-        return response()->json($user);
+        $response['is_deleted'] = (new UserSession())->delete($request->input('session_key'));
+        return response()->json($response);
     }
 
-    public function read_data(Request $request, $key)
+    public function read_data(Request $request)
     {
-        $user = (new User())->create($request->input('user_name'), $request->input('custom_user_id'));
-        return response()->json($user);
+        $response['data'] = (new SessionWrapper())->Get($request->input('session_key'), $request->input('key'));
+        return response()->json($response);
     }
 
-    public function put_data(Request $request, $key)
+    public function put_data(Request $request)
     {
-        $user = (new User())->list($id, $request->input('user_name'), $request->input('custom_user_id'));
-        return response()->json($user);
+        $response['put_status'] = (new SessionWrapper())->Put($request->input('session_key'), $request->input('key'), $request->input('value'));
+        return response()->json($response);
     }
 }
