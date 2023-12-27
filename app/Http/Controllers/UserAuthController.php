@@ -37,16 +37,4 @@ class UserAuthController extends Controller
         }
         return response()->json($response);
     }
-
-    public function exists_session(Request $request)
-    {
-        $response = (new UserAuth())->exists_session($request->input('session_key'));
-        return response()->json($response);
-    }
-
-    public function delete_session(Request $request)
-    {
-        $response = (new UserAuth())->delete_session($request->input('session_key'));
-        return response()->json($response);
-    }
 }

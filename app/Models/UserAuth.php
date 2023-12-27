@@ -8,6 +8,11 @@ use App\Models\SessionWrapper;
 
 class UserAuth
 {
+    public function __construct()
+    {
+        return $this;
+    }
+    
     public function register_mail(string $user_id, string $mail, string $password)
     {
         DB::beginTransaction();
