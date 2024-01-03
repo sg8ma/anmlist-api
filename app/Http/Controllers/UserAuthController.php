@@ -43,6 +43,7 @@ class UserAuthController extends Controller
     public function test_mail(Request $request)
     {
         Mail::to($request->user())->send(new TestSend());
+        $response['status'] = 'success';
         return response()->json($response);
     }
 }
