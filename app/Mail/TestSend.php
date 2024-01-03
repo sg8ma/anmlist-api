@@ -28,8 +28,9 @@ class TestSend extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('auth@anmlist.yco.jp', 'Anmlist'),
             subject: 'Test Send',
+            from: new Address('auth@anmlist.yco.jp', 'Anmlist'),
+            to: 'daichi.sugiyama.public@gmail.com',
         );
     }
 
