@@ -36,9 +36,8 @@ Route::delete('/user/{id}', [UserController::class, 'delete']);
 Route::delete('/user/auth/{type}', [UserAuthController::class, 'delete']);
 
 // アニメ情報画面
-Route::get('/anime', [AnimeController::class, 'list']);
 Route::post('/anime/search', [AnimeController::class, 'search']);
-Route::get('/anime/{id}', [AnimeController::class, 'read']);
+Route::get('/anime/{id}', [AnimeController::class, 'detail']);
 
 // My番組表
 // お気に入り

@@ -8,21 +8,28 @@ use Illuminate\Http\Request;
 
 class AnimeController extends Controller
 {
-    public function list(Request $request)
+    public function search(Request $request)
     {
-        $response = (new Anime())->list();
+        $response = [];
+        $response['search']['season_id'] = $request->input('season_id');
+        $response['search']['keyword'] = $request->input('keyword');
+        $response['search']['sort_by'] = $request->input('sort_by');
+        $response['search']['sort_order'] = $request->input('sort_order');
+        $response['result'] = (new Anime())->list(
+            season_id: $request->input('season_id'),
+            keyword: $request->input('keyword'),
+            sort_by: $request->input('sort_by'),
+            sort_order: $request->input('sort_order')
+        );
         return response()->json($response);
     }
 
-    // public function search(Request $request)
-    // {
-    //     $user = (new Anime())->search($request->input('user_name'), $request->input('custom_user_id'));
-    //     return response()->json($user);
-    // }
-
-    // public function read(Request $request, $id)
-    // {
-    //     $user = (new Anime())->read($id);
-    //     return response()->json($user);
-    // }
+    public function detail(Request $request, $id)
+    {
+        $response = [];
+        $response['anime'] = (new Anime())->detail($id);
+        $response['anime']['favorite'] = (new Anime())->detail_favorite($id);
+        $response['anime']['broadcast'] = (new Anime())->detail_broadcast($id);
+        return response()->json($response);
+    }
 }
