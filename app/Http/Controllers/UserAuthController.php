@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserAuth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestSend;
 
 class UserAuthController extends Controller
 {
@@ -35,6 +37,12 @@ class UserAuthController extends Controller
         {
             $response = (new UserAuth())->login_mail($request->input('mail'), $request->input('password'));
         }
+        return response()->json($response);
+    }
+
+    public function test_mail(Request $request)
+    {
+        Mail::to($request->user())->send(new TestSend());
         return response()->json($response);
     }
 }

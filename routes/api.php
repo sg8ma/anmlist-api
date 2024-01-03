@@ -21,6 +21,7 @@ use App\Http\Controllers\AnimeController;
 Route::post('/user', [UserController::class, 'create']);
 Route::post('/user/auth/{type}', [UserAuthController::class, 'create']);
 Route::get('/user/auth/mail/otp', [UserAuthController::class, 'check_otp']);
+Route::post('/user/auth/mail/test', [UserAuthController::class, 'test_mail']);
 
 // ユーザー認証画面
 Route::post('/user/login/{type}', [UserAuthController::class, 'login']);       //ログイン
