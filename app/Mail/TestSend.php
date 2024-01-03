@@ -52,4 +52,3 @@ class TestSend extends Mailable
         return [];
     }
 }
-~
