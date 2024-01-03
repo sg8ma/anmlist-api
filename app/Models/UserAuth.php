@@ -5,7 +5,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\SessionWrapper;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\TestSend;
+use App\Mail\AuthMailAddress;
 
 class UserAuth
 {
@@ -65,11 +65,7 @@ class UserAuth
             }
             if($auth_token_result > 0)
             {
-
-                // メール送信処理
-                // $mail
-                // $token
-                // $otp
+                Mail::to(auth()->user())->send(new AuthMailAddress($mail, $token, $otp));
                 return 1;
             }
         }

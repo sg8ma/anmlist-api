@@ -10,14 +10,14 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
-class TestSend extends Mailable
+class AuthMailAddress extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public $mail, public $token, public $otp)
     {
         //
     }
@@ -30,7 +30,7 @@ class TestSend extends Mailable
         return new Envelope(
             subject: '【AnmList】メールアドレス認証のお願い',
             from: new Address('security@anmlist.yco.jp', 'AnmList'),
-            to: 'daichi.sugiyama.public@gmail.com',
+            to: $this->mail,
         );
     }
 
