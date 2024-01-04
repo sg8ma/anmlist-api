@@ -57,7 +57,7 @@ class Anime
                     'a.anime_id',
                     'b.channel_id',
                     'c.channel_name',
-                    'b.broadcast_day',
+                    'b.broadcast_day_of_week',
                     'b.broadcast_time',
                 )
                 ->where('a.anime_id', '=', $anime_id)

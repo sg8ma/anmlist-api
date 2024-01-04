@@ -39,9 +39,15 @@ Route::delete('/user/auth/{type}', [UserAuthController::class, 'delete']);
 Route::post('/anime/search', [AnimeController::class, 'search']);
 Route::get('/anime/{id}', [AnimeController::class, 'detail']);
 
-// My番組表
 // お気に入り
+Route::get('/user/{user_id}/favorite', [UserFavoriteController::class, 'list']); // お気に入り一覧
+Route::put('/user/{user_id}/favorite/{anime_id}', [UserFavoriteController::class, 'add']);
+Route::delete('/user/{user_id}/favorite/{anime_id}', [UserFavoriteController::class, 'delete']); 
 
+// My番組表
+Route::get('/user/{user_id}/anime', [UserAnimeController::class, 'list']); 
+Route::post('/user/{user_id}/anime/{anime_id}', [UserAnimeController::class, 'update']); 
+Route::delete('/user/{id}/anime/{anime_id}', [UserAnimeController::class, 'delete']); 
 
 // 他
 Route::get('/user/session/data', [UserSessionController::class, 'read_data']);
